@@ -1,0 +1,11 @@
+function [G, w, output] = RBF_calculate(input, target, hidden_center, sigma)
+[hidden_layer_count, junk] = size(hidden_center);
+[input_count, junk] = size(input);
+input1 = input(:,1) * ones(1, hidden_layer_count);
+input2 = input(:,2) * ones(1, hidden_layer_count);
+center1 = ones(input_count,1) * hidden_center(:,1)';
+center2 = ones(input_count,1) * hidden_center(:,2)';
+G = exp(-((input1-center1).^2 + (input2-center2).^2)/(2*sigma^2));
+G = exp(-((input1-center1).^2 + (input2-center2).^2));
+w = (G'*G)\G'* target;
+output = G*w;
